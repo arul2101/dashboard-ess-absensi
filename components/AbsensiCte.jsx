@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card"
 import { FiClock } from "react-icons/fi";
 
-import { time, date, day, month, year, getCurrentTime  } from "@/constant";
+import { time, date, day, month, year, getCurrentTime, monthNumber  } from "@/constant";
 
 export default function AbsensiCte() {
   const [times, setTimes] = useState(time);
@@ -39,7 +39,9 @@ export default function AbsensiCte() {
 
         <div
           className={`w-[50%] p-4 flex flex-col items-center gap-2  ${day === 'Sunday' || day === 'Saturday' ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-[#1e293b]'}`}
-          onClick={() => console.log(times)}
+          onClick={() => {
+            console.log(`${date}/${monthNumber}/${year}`)
+          }}
         >
           <FiClock />
           <p>Clock-Out</p>

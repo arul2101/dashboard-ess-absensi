@@ -7,5 +7,7 @@ export const months = ["January","February","March","April","May","June","July",
 
 export const date = new Date().getDate();
 export const day = weekday[new Date().getDay()];
+export const dayNumber = new Date().getDay();
 export const month = months[new Date().getMonth()];
+export const monthNumber = new Date().getMonth() + 1;
 export const year = new Date().getFullYear();
