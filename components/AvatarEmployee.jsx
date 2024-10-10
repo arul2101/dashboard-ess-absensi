@@ -23,7 +23,6 @@ export default function AvatarEmployee() {
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-3 w-[100px]">
-          <Link href="/profile">Profile</Link>
           <Link href="/logout">Logout</Link>
         </PopoverContent>
       </Popover>

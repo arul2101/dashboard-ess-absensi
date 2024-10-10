@@ -7,7 +7,7 @@ import { VscChromeClose } from "react-icons/vsc";
 import { FiMenu } from "react-icons/fi";
 
 export default function Navigation() {
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const pathname = usePathname()
   return (
     <>
@@ -31,8 +31,6 @@ export default function Navigation() {
         <section className="mt-2">
           <div className="flex flex-col gap-3 mt-4">
             <Link href="/" className={`hover:bg-[#1e293b] p-2 rounded-md ${pathname === '/' && 'bg-[#1e293b]'}`}>Attendance</Link>
-            <Link href="/" className="hover:bg-[#1e293b] p-2 rounded-md">Profile</Link>
-            <Link href="/" className="hover:bg-[#1e293b] p-2 rounded-md">Logout</Link>
           </div>
         </section>
       </nav>
