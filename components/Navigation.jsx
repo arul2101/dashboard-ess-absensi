@@ -9,6 +9,8 @@ import { FiMenu } from "react-icons/fi";
 export default function Navigation() {
   const [toggle, setToggle] = useState(false);
   const pathname = usePathname()
+
+
   return (
     <>
       <div className="text-2xl cursor-pointer" onClick={() => setToggle(true)}>

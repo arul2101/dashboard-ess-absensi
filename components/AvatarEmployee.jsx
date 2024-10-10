@@ -1,3 +1,6 @@
+"use client"
+
+import react from "react"
 import {
   Popover,
   PopoverContent,
@@ -5,14 +8,30 @@ import {
 } from "@/components/ui/popover"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Link from "next/link"
+import { supabaseBrowser } from "@/lib/supabase/browser"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
-export default function AvatarEmployee() {
+export default function AvatarEmployee({ full_name }) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    const supabase = supabaseBrowser();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    router.refresh();
+  }
+
   return (
     <div className="flex gap-2">
       <div className="text-end">
-        <h2>Muhammad Yanuarullah Assidiq</h2>
-        <p>Employee</p>
+        <h2 className="text-xl">{full_name}</h2>
+        <p className="text-sm">Employee</p>
       </div>
 
       <Popover>
@@ -23,7 +42,7 @@ export default function AvatarEmployee() {
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="flex flex-col gap-3 w-[100px]">
-          <Link href="/logout">Logout</Link>
+          <p className="cursor-pointer" onClick={handleLogout}>Logout</p>
         </PopoverContent>
       </Popover>
     </div>

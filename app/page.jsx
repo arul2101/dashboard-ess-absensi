@@ -1,5 +1,3 @@
-"use client"
-
 import AbsensiCte from "@/components/AbsensiCte";
 import AvatarEmployee from "@/components/AvatarEmployee";
 import Navigation from "@/components/Navigation";
@@ -12,8 +10,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { supabaseServer } from "@/lib/supabase/server";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const datas = [
   {
@@ -97,12 +97,19 @@ const datas = [
 ]
 
 
-export default function Home() {
+export default async function Home() {
+  const supabase = supabaseServer();
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data?.user) {
+    redirect("/login");
+  }
+
   return (
     <div className="max-w-[1920px] mx-auto">
       <nav className="p-6 flex items-center justify-between">
         <Navigation />
-        <AvatarEmployee />
+        <AvatarEmployee full_name={data?.user.user_metadata.full_name} />
       </nav>
 
       <AbsensiCte />

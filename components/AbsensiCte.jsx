@@ -1,12 +1,12 @@
 "use client";
 
-import {useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   Card
 } from "@/components/ui/card"
 import { FiClock } from "react-icons/fi";
 
-import { time, date, day, month, year, getCurrentTime, monthNumber  } from "@/constant";
+import { time, date, day, month, year, getCurrentTime, monthNumber } from "@/constant";
 
 export default function AbsensiCte() {
   const [times, setTimes] = useState(time);
@@ -15,13 +15,15 @@ export default function AbsensiCte() {
   useEffect(() => setInitialRender(true), []);
   setInterval(() => setTimes(getCurrentTime()), 1000)
 
-  if(!initialRender) return (
+  if (!initialRender) return (
     <section className="w-[350px] mx-auto mt-14">
       <p className="text-center">Loading...</p>
     </section>
   )
 
-  if(initialRender) return (
+
+
+  if (initialRender) return (
     <section className="w-[350px] mx-auto mt-14">
       <section className="text-center space-y-2">
         <p>{day}, {month} {date}th {year}</p>
