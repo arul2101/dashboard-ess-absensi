@@ -2,6 +2,18 @@ export const getCurrentTime = () => new Date().toLocaleTimeString([], { hour: '2
 
 export let time = getCurrentTime();
 
+export const generateTime = () => {
+  const time = new Date();
+  const hours = time.getHours().toString();
+  const minutes = time.getMinutes().toString();
+  const seconds = time.getSeconds().toString();
+  return {
+    hours: hours.length === 1 ? `0${hours}` : hours,
+    minutes: minutes.length === 1 ? `0${minutes}` : minutes,
+    seconds: seconds.length === 1 ? `0${seconds}` : seconds
+  }
+}
+
 export const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -14,7 +26,7 @@ export const year = new Date().getFullYear();
 
 export const getTimeDifference = (startTime, endTime) => {
   if (endTime === null) return null;
-  const difference = endTime - startTime;
+  const difference = Number(endTime) - Number(startTime);
   const differenceInMinutes = difference / 1000 / 60;
   let hours = Math.floor(differenceInMinutes / 60);
   if (hours < 0) {

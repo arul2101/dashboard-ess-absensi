@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const supabase = supabaseServer();
   const { data, error } = await supabase.auth.getUser();
-  const { data: absensi } = await supabase.from("absensi").select();
+  const { data: absensi } = await supabase.from("absensi").select().order('created_at', { ascending: false });
 
   if (error || !data?.user) {
     redirect("/login");

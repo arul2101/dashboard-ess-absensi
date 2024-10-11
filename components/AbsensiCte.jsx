@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/card"
 import { FiClock } from "react-icons/fi";
 
-import { time, date, day, month, year, getCurrentTime, monthNumber } from "@/constant";
+import { time, date, day, month, year, getCurrentTime, monthNumber, getTime, generateTime } from "@/constant";
 import Webcamera from "./Webcamera";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -68,6 +68,7 @@ export default function AbsensiCte() {
   setInterval(() => setTimes(getCurrentTime()), 1000)
 
   const handleConfirm = async (type) => {
+    const { hours, minutes, seconds } = generateTime();
     if (type === "clock in") {
       const { data, errorUSer } = await supabase.auth.getUser();
       setLoading(true);
@@ -76,7 +77,7 @@ export default function AbsensiCte() {
         .insert({
           user_id: data.user.id,
           date: `${date}/${monthNumber}/${year}`,
-          clock_in: times,
+          clock_in: `${hours}:${minutes}:${seconds}`,
           clock_out: "-",
           location: `https://www.google.com/maps/search/?api=1&query=${userLocation.latitude},${userLocation.longitude}`,
           image_url: "-"
@@ -95,7 +96,7 @@ export default function AbsensiCte() {
       setLoading(true);
       const { error } = await supabase
         .from('absensi')
-        .update({ clock_out: times })
+        .update({ clock_out: `${hours}:${minutes}:${seconds}` })
         .eq('date', `${date}/${monthNumber}/${year}`);
 
       if (error) {
@@ -108,7 +109,6 @@ export default function AbsensiCte() {
       toast.success("Success Clock Out!")
       router.refresh();
     }
-
   }
 
   if (!initialRender && !absensi) return (
