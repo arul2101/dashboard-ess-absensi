@@ -2,14 +2,27 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { VscChromeClose } from "react-icons/vsc";
 import { FiMenu } from "react-icons/fi";
+import { supabaseBrowser } from "@/lib/supabase/browser";
 
 export default function Navigation() {
   const [toggle, setToggle] = useState(false);
   const pathname = usePathname()
+  const router = useRouter()
 
+  const handleLogout = async () => {
+    const supabase = supabaseBrowser();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+
+    router.refresh();
+  }
 
   return (
     <>
@@ -33,6 +46,7 @@ export default function Navigation() {
         <section className="mt-2">
           <div className="flex flex-col gap-3 mt-4">
             <Link href="/" className={`hover:bg-[#1e293b] p-2 rounded-md ${pathname === '/' && 'bg-[#1e293b]'}`}>Attendance</Link>
+            <p className="hover:bg-[#1e293b] p-2 rounded-md cursor-pointer" onClick={handleLogout}>Logout</p>
           </div>
         </section>
       </nav>
